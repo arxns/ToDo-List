@@ -1,9 +1,12 @@
 package com.example.myapp
 
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -15,6 +18,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Устанавливаем статус-бар прозрачным
+        window.statusBarColor = android.graphics.Color.TRANSPARENT
+
+        // Включаем режим полной поверхности (если необходимо)
+        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { view, insets ->
+            val params = view.layoutParams as? ViewGroup.MarginLayoutParams
+            if (params != null) {
+                params.topMargin = insets.systemWindowInsetTop
+                view.layoutParams = params
+            }
+            insets
+        }
 
         // Инициализация RecyclerView
         recyclerView = findViewById(R.id.recyclerView)
